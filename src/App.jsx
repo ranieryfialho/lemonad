@@ -60,7 +60,7 @@ function App() {
 
       <motion.div
         animate={{
-          top: isScrolled ? "1.25rem" : "auto",
+          top: isScrolled ? "0.01gitrem" : "auto",
           bottom: isScrolled ? "auto" : "2.5rem",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
