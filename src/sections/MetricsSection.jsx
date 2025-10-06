@@ -1,0 +1,67 @@
+import { useEffect, useRef } from "react";
+import { animate, motion, useInView } from "framer-motion";
+
+function AnimatedNumber({ to }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (inView) {
+      animate(0, to, {
+        duration: 1.5,
+        onUpdate(value) {
+          if (ref.current) {
+            ref.current.textContent = Math.round(value).toLocaleString("pt-BR");
+          }
+        },
+      });
+    }
+  }, [inView, to]);
+
+  return <span ref={ref}>0</span>;
+}
+
+const metrics = [
+  { value: 5, suffix: "M+", label: "Clientes Satisfeitos" },
+  { value: 450, suffix: "M+", label: "Alcance de Campanhas" },
+  { value: 92, suffix: "%", label: "Taxa de Sucesso" },
+  { value: 100, suffix: "+", label: "Projetos Entregues" },
+];
+
+const MetricsSection = () => {
+  return (
+    <section id="metrics" className="py-20"> 
+      <motion.div
+        className="container mx-auto 
+                   bg-foreground/5 border border-white/10 backdrop-blur-lg 
+                   rounded-3xl p-8 shadow-xl"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {metrics.map((metric, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              viewport={{ once: true, amount: 0.5 }}
+            >
+              <h3 className="text-5xl md:text-6xl font-lemonad text-primary">
+                <AnimatedNumber to={metric.value} />
+                {metric.suffix}
+              </h3>
+              <p className="mt-2 font-engravers text-sm uppercase tracking-wider text-muted-foreground">
+                {metric.label}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+export default MetricsSection;
