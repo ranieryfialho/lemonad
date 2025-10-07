@@ -5,6 +5,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { buttonVariants } from "@/components/ui/button";
 import { HomeIcon, LayoutGrid, MessageSquare, BarChart2, Briefcase, Users } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -27,6 +28,14 @@ const DOCK_DATA = [
 
 function App() {
   const isScrolled = useScrollPosition(80);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleScroll = (e, targetId) => {
     e.preventDefault();
@@ -45,11 +54,9 @@ function App() {
   };
 
   return (
-    // ▼▼▼ MUDANÇA 1: 'bg-background' foi REMOVIDO daqui ▼▼▼
     <div className="min-h-screen text-foreground relative flex flex-col">
       <ParticlesBackground />
       <Header />
-      {/* ▼▼▼ MUDANÇA 2: 'bg-background' foi ADICIONADO aqui ▼▼▼ */}
       <main className="flex-grow bg-background">
         <HeroSection />
         <ServicesSection />
@@ -62,8 +69,8 @@ function App() {
 
       <motion.div
         animate={{
-          top: isScrolled ? "0.01rem" : "auto",
-          bottom: isScrolled ? "auto" : "2.5rem",
+          top: isMobile ? "auto" : (isScrolled ? "0.5rem" : "auto"),
+          bottom: isMobile ? "1.5rem" : (isScrolled ? "auto" : "2.5rem"),
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         className="fixed left-1/2 -translate-x-1/2 z-50"
