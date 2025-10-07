@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
+import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile";
 
 const projects = [
   {
@@ -25,27 +25,51 @@ const projects = [
 ];
 
 const PortfolioSection = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
+  const variants = useResponsiveVariants();
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  if (isMobile) {
+    return (
+      <section id="portfolio" className="container mx-auto py-24 text-center">
+        <div>
+          <h2 className="text-5xl font-lemonad mb-4">Projetos em <span className="text-primary">Destaque</span></h2>
+          <p className="text-lg text-muted-foreground mx-auto max-w-2xl mb-12">
+            Confira alguns dos resultados que entregamos, combinando criatividade, estratégia e tecnologia.
+          </p>
+        </div>
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: isMobile ? 0.05 : 0.2 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: isMobile ? 10 : 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
-  };
+        <div className="grid md:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <div key={index}>
+              <Card className="bg-foreground/5 border-border/50 text-left overflow-hidden h-full">
+                <div className="overflow-hidden">
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="w-full h-48 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <CardHeader>
+                  <CardTitle className="font-lemonad text-xl">{project.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.services.map((service, i) => (
+                      <Badge key={i} variant="outline" className="font-engravers">
+                        {service}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="portfolio" className="container mx-auto py-24 text-center">
@@ -53,7 +77,7 @@ const PortfolioSection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        variants={itemVariants}
+        variants={variants.itemWithMotion}
       >
         <h2 className="text-5xl font-lemonad mb-4">Projetos em <span className="text-primary">Destaque</span></h2>
         <p className="text-lg text-muted-foreground mx-auto max-w-2xl mb-12">
@@ -65,16 +89,16 @@ const PortfolioSection = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
+        variants={variants.container}
         className="grid md:grid-cols-3 gap-8"
       >
         {projects.map((project, index) => (
-          <motion.div key={index} variants={itemVariants}>
+          <motion.div key={index} variants={variants.item}>
             <Card className="bg-foreground/5 border-border/50 text-left overflow-hidden h-full group transition-all hover:scale-105 hover:shadow-2xl">
               <div className="overflow-hidden">
-                <img 
-                  src={project.imageUrl} 
-                  alt={project.title} 
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
                   className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                   loading="lazy"
                 />

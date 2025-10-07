@@ -8,7 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile";
 
 const testimonials = [
   {
@@ -38,20 +38,73 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
+  const variants = useResponsiveVariants();
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  // Mobile: sem animações complexas
+  if (isMobile) {
+    return (
+      <section id="testimonials" className="py-24 bg-foreground/5">
+        <div className="container mx-auto text-center">
+          <div>
+            <h2 className="text-5xl font-lemonad mb-4">
+              O que Nossos <span className="text-primary">Clientes Dizem</span>
+            </h2>
+            <p className="text-lg text-muted-foreground mx-auto max-w-2xl mb-12">
+              Resultados reais contados por quem mais importa: nossos parceiros de sucesso.
+            </p>
+          </div>
 
-  const titleVariants = {
-    hidden: { opacity: 0, y: isMobile ? 20 : 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
-  };
+          <div>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-4xl mx-auto"
+            >
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1 h-full">
+                      <Card className="flex flex-col justify-between h-full bg-background/50 border-border/50 text-left p-6">
+                        <CardContent className="p-0">
+                          <div className="flex text-primary mb-2">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="h-5 w-5 fill-current" />
+                            ))}
+                          </div>
+                          <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
+                        </CardContent>
+                        <div className="flex items-center gap-4 mt-6">
+                          <img
+                            src={testimonial.avatarUrl}
+                            alt={testimonial.name}
+                            className="h-12 w-12 rounded-full object-cover"
+                            loading="lazy"
+                          />
+                          <div>
+                            <p className="font-lemonad text-base">{testimonial.name}</p>
+                            <p className="font-engravers text-xs text-muted-foreground">
+                              {testimonial.title}
+                            </p>
+                          </div>
+                        </div>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
+  // Desktop: com animações
   return (
     <section id="testimonials" className="py-24 bg-foreground/5">
       <div className="container mx-auto text-center">
@@ -59,18 +112,20 @@ const TestimonialsSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          variants={titleVariants}
+          variants={variants.itemWithMotion}
         >
-          <h2 className="text-5xl font-lemonad mb-4">O que Nossos <span className="text-primary">Clientes Dizem</span></h2>
+          <h2 className="text-5xl font-lemonad mb-4">
+            O que Nossos <span className="text-primary">Clientes Dizem</span>
+          </h2>
           <p className="text-lg text-muted-foreground mx-auto max-w-2xl mb-12">
             Resultados reais contados por quem mais importa: nossos parceiros de sucesso.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: isMobile ? 20 : 50 }}
+          initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: isMobile ? 0.3 : 0.5, delay: isMobile ? 0.1 : 0.3 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true, amount: 0.3 }}
         >
           <Carousel
@@ -87,20 +142,24 @@ const TestimonialsSection = () => {
                     <Card className="flex flex-col justify-between h-full bg-background/50 border-border/50 text-left p-6">
                       <CardContent className="p-0">
                         <div className="flex text-primary mb-2">
-                          {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-current" />)}
+                          {[...Array(5)].map((_, i) => (
+                            <Star key={i} className="h-5 w-5 fill-current" />
+                          ))}
                         </div>
                         <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
                       </CardContent>
                       <div className="flex items-center gap-4 mt-6">
-                        <img 
-                          src={testimonial.avatarUrl} 
-                          alt={testimonial.name} 
+                        <img
+                          src={testimonial.avatarUrl}
+                          alt={testimonial.name}
                           className="h-12 w-12 rounded-full object-cover"
                           loading="lazy"
                         />
                         <div>
                           <p className="font-lemonad text-base">{testimonial.name}</p>
-                          <p className="font-engravers text-xs text-muted-foreground">{testimonial.title}</p>
+                          <p className="font-engravers text-xs text-muted-foreground">
+                            {testimonial.title}
+                          </p>
                         </div>
                       </div>
                     </Card>
