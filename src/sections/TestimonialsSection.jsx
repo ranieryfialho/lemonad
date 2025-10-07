@@ -8,8 +8,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
 
-// Dados de exemplo para os depoimentos
 const testimonials = [
   {
     name: "Ana Silva",
@@ -38,9 +38,18 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const titleVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: isMobile ? 20 : 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
   };
 
   return (
@@ -59,9 +68,9 @@ const TestimonialsSection = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: isMobile ? 20 : 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: isMobile ? 0.3 : 0.5, delay: isMobile ? 0.1 : 0.3 }}
           viewport={{ once: true, amount: 0.3 }}
         >
           <Carousel
@@ -83,7 +92,12 @@ const TestimonialsSection = () => {
                         <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
                       </CardContent>
                       <div className="flex items-center gap-4 mt-6">
-                        <img src={testimonial.avatarUrl} alt={testimonial.name} className="h-12 w-12 rounded-full object-cover" />
+                        <img 
+                          src={testimonial.avatarUrl} 
+                          alt={testimonial.name} 
+                          className="h-12 w-12 rounded-full object-cover"
+                          loading="lazy"
+                        />
                         <div>
                           <p className="font-lemonad text-base">{testimonial.name}</p>
                           <p className="font-engravers text-xs text-muted-foreground">{testimonial.title}</p>

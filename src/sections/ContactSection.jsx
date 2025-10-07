@@ -3,21 +3,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useEffect, useState } from "react";
 
 const ContactSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.3 } },
+    visible: { opacity: 1, transition: { staggerChildren: isMobile ? 0.1 : 0.3 } },
   };
 
   const itemVariantsLeft = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, x: isMobile ? 0 : -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
   };
 
   const itemVariantsRight = {
-    hidden: { opacity: 0, x: 50 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, x: isMobile ? 0 : 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
   };
 
   return (

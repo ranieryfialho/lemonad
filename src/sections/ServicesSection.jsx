@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const services = [
   "Gestão de Tráfego Pago (Google & Meta Ads)",
@@ -10,22 +11,34 @@ const services = [
 ];
 
 const ServicesSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.3 },
+      transition: { 
+        staggerChildren: isMobile ? 0.05 : 0.2, 
+        delayChildren: isMobile ? 0.1 : 0.3 
+      },
     },
   };
 
   const itemVariantsLeft = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, x: isMobile ? 0 : -20 },
+    visible: { opacity: 1, x: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
   };
 
   const itemVariantsRight = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, x: isMobile ? 0 : 20 },
+    visible: { opacity: 1, x: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
   };
 
   return (

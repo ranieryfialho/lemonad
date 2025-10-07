@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
 
 const projects = [
   {
@@ -24,17 +25,26 @@ const projects = [
 ];
 
 const PortfolioSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.2 },
+      transition: { staggerChildren: isMobile ? 0.05 : 0.2 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hidden: { opacity: 0, y: isMobile ? 10 : 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: isMobile ? 0.3 : 0.5 } },
   };
 
   return (
@@ -62,7 +72,12 @@ const PortfolioSection = () => {
           <motion.div key={index} variants={itemVariants}>
             <Card className="bg-foreground/5 border-border/50 text-left overflow-hidden h-full group transition-all hover:scale-105 hover:shadow-2xl">
               <div className="overflow-hidden">
-                <img src={project.imageUrl} alt={project.title} className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110" />
+                <img 
+                  src={project.imageUrl} 
+                  alt={project.title} 
+                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                  loading="lazy"
+                />
               </div>
               <CardHeader>
                 <CardTitle className="font-lemonad text-xl">{project.title}</CardTitle>

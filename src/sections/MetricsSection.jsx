@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { animate, motion, useInView } from "framer-motion";
 
 function AnimatedNumber({ to }) {
@@ -29,24 +29,36 @@ const metrics = [
 ];
 
 const MetricsSection = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section id="metrics" className="py-20"> 
       <motion.div
         className="container mx-auto 
                    bg-foreground/5 border border-white/10 backdrop-blur-lg 
                    rounded-3xl p-8 shadow-xl"
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: isMobile ? 20 : 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: isMobile ? 0.3 : 0.5 }}
         viewport={{ once: true, amount: 0.5 }}
       >
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {metrics.map((metric, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: isMobile ? 10 : 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
+              transition={{ 
+                duration: isMobile ? 0.2 : 0.5, 
+                delay: isMobile ? index * 0.05 : index * 0.2 
+              }}
               viewport={{ once: true, amount: 0.5 }}
             >
               <h3 className="text-5xl md:text-6xl font-lemonad text-primary">
