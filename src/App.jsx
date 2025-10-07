@@ -29,12 +29,49 @@ const DOCK_DATA = [
 function App() {
   const isScrolled = useScrollPosition(80);
   const [isMobile, setIsMobile] = useState(false);
+  const [activeSection, setActiveSection] = useState("#home");
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Detecta qual seção está visível na tela (melhorado)
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = DOCK_DATA.map(item => item.href);
+      const scrollPosition = window.scrollY + window.innerHeight / 2; // Centro da viewport
+      
+      // Verifica se está no final da página
+      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+      
+      if (isBottom) {
+        // Se estiver no final, ativa a última seção (contact)
+        setActiveSection("#contact");
+        return;
+      }
+
+      // Loop reverso para pegar a seção mais próxima do topo
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.querySelector(sections[i]);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const sectionMiddle = sectionTop + (sectionHeight / 2);
+
+          if (scrollPosition >= sectionTop - 100) {
+            setActiveSection(sections[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    handleScroll(); // Chama ao montar
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleScroll = (e, targetId) => {
@@ -77,26 +114,33 @@ function App() {
       >
         <TooltipProvider>
           <Dock direction="middle" className="border border-white/10 bg-background/30 backdrop-blur-lg shadow-lg">
-            {DOCK_DATA.map((item) => (
-              <DockIcon key={item.label}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <a 
-                      href={item.href} 
-                      onClick={(e) => handleScroll(e, item.href)}
-                      aria-label={item.label} 
-                      className={cn(
-                        buttonVariants({ variant: "ghost", size: "icon" }),
-                        "size-12 rounded-full hover:text-primary transition-colors cursor-pointer"
-                      )}
-                    >
-                      <item.icon className="size-5" />
-                    </a>
-                  </TooltipTrigger>
-                  <TooltipContent><p>{item.label}</p></TooltipContent>
-                </Tooltip>
-              </DockIcon>
-            ))}
+            {DOCK_DATA.map((item) => {
+              const isActive = activeSection === item.href;
+              
+              return (
+                <DockIcon key={item.label}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <a 
+                        href={item.href} 
+                        onClick={(e) => handleScroll(e, item.href)}
+                        aria-label={item.label} 
+                        className={cn(
+                          buttonVariants({ variant: "ghost", size: "icon" }),
+                          "size-12 rounded-full transition-all cursor-pointer",
+                          isActive 
+                            ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                            : "hover:text-primary"
+                        )}
+                      >
+                        <item.icon className="size-5" />
+                      </a>
+                    </TooltipTrigger>
+                    <TooltipContent><p>{item.label}</p></TooltipContent>
+                  </Tooltip>
+                </DockIcon>
+              );
+            })}
           </Dock>
         </TooltipProvider>
       </motion.div>
