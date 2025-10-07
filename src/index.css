@@ -13,14 +13,17 @@
 
 @layer base {
   :root {
-    /* TEMA CLARO (LIGHT) */
+    /* TEMA CLARO (LIGHT) - CORREÇÕES AQUI */
     --background: 48 100% 97%; /* Bege Claro - #FFFBEA */
     --foreground: 0 0% 3.9%; /* Preto para texto */
 
-    --primary: 76 100% 50%; /* Verde Limão - #85FF00 (ajustado para HSL) */
-    --primary-foreground: 80 100% 10%; /* Cor escura para texto sobre o verde */
+    /* ▼▼▼ CORREÇÃO AQUI: NOVA COR PRIMÁRIA PARA O TEMA CLARO ▼▼▼ */
+    /* Verde Oliva Escuro: #537402 -> HSL(83, 97%, 15%) */
+    --primary: 83 97% 15%; 
+    --primary-foreground: 48 100% 97%; /* Texto claro sobre o verde escuro */
+    /* ▲▲▲ FIM DA CORREÇÃO ▲▲▲ */
     
-    /* Cores padrão do shadcn, podemos ajustar depois se necessário */
+    /* Cores padrão do shadcn, ajustadas para o tema claro */
     --card: 48 100% 97%;
     --card-foreground: 0 0% 3.9%;
     --popover: 48 100% 97%;
@@ -40,7 +43,7 @@
   }
 
   .dark {
-    /* TEMA ESCURO (DARK) */
+    /* TEMA ESCURO (DARK) - Permanece como está, com o verde limão vibrante */
     --background: 0 0% 0%; /* Preto - #000000 */
     --foreground: 48 100% 97%; /* Bege Claro para texto */
 

@@ -45,10 +45,12 @@ function App() {
   };
 
   return (
-    <div className="bg-background min-h-screen text-foreground relative flex flex-col">
+    // ▼▼▼ MUDANÇA 1: 'bg-background' foi REMOVIDO daqui ▼▼▼
+    <div className="min-h-screen text-foreground relative flex flex-col">
       <ParticlesBackground />
       <Header />
-      <main className="flex-grow">
+      {/* ▼▼▼ MUDANÇA 2: 'bg-background' foi ADICIONADO aqui ▼▼▼ */}
+      <main className="flex-grow bg-background">
         <HeroSection />
         <ServicesSection />
         <MetricsSection />
@@ -60,7 +62,7 @@ function App() {
 
       <motion.div
         animate={{
-          top: isScrolled ? "0.01gitrem" : "auto",
+          top: isScrolled ? "0.01rem" : "auto",
           bottom: isScrolled ? "auto" : "2.5rem",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
