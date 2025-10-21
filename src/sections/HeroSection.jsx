@@ -81,10 +81,10 @@ const HeroSection = () => {
           className="flex flex-col items-center" 
         >
           <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-lemonad font-bold">
-            Marketing com gosto de <br /> <span className="text-primary">Resultado.</span>
+            Bem-vindo(a) à sua última<br /> <span className="text-primary">agência de marketing digital</span> !
           </motion.h1>
           <motion.p variants={itemVariants} className="mx-auto mt-6 max-w-2xl font-engravers text-lg tracking-wider text-muted-foreground">
-            Transformamos ideias em resultados impactantes. Estratégias de marketing digital que dão sabor ao seu sucesso.
+            Transformamos ideias em resultados impactantes! O marketing aqui tem gosto de resultado!
           </motion.p>
           <motion.div variants={itemVariants} className="mt-16"> 
             <ScrollIndicator />
