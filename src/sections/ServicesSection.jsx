@@ -1,25 +1,22 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
-// Importa os hooks para responsividade
 import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile"; 
 
-// ▼▼▼ MUDANÇA AQUI: Array de serviços atualizado conforme o pedido do cliente ▼▼▼
 const services = [
-  "Gestão de Tráfego Pago (Google, Meta & TikTok Ads)", // Adicionado TikTok Ads
+  "Gestão de Tráfego Pago (Google, Meta & TikTok Ads)",
   "Desenvolvimento de E-commerce",
   "Gestão de Redes Sociais",
   "SEO e Otimização de Conteúdo",
-  "Identidade Visual", // Novo item
-  "Automação de Marketing", // Separado do CRM
-  "Implantação de CRM", // Novo item separado
+  "Identidade Visual",
+  "Automação de Marketing",
+  "Implantação de CRM",
 ];
-// ▲▲▲ FIM DA MUDANÇA ▲▲▲
 
 const ServicesSection = () => {
   const isMobile = useIsMobile();
   const variants = useResponsiveVariants();
 
-  // ----- VERSÃO MOBILE (sem animações complexas) -----
+  // ----- VERSÃO MOBILE -----
   if (isMobile) {
     return (
       <section id="services" className="py-24">
