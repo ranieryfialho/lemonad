@@ -15,14 +15,16 @@ const testimonials = [
   {
     name: "Hayaly Soares",
     title: "Cliente LemonAD",
-    quote: "Não conhecia sobre tráfego e estratégia digital. Ruan e Talyta conseguiram entregar mais do que conhecimento técnico na minha empresa, houve empatia, comunicação, transparência e cuidado desde o começo até os dias de hoje. Me sinto abençoado em ter fechado essa parceira de sucesso. E tenho certeza de que cada negócio que eles cuidam prosperam de uma forma sensacional!",
+    quote: "Não conhecia sobre tráfego e estratégia digital. Ruan e Talyta conseguiram entregar mais do que conhecimento técnico na minha empresa, houve empatia, comunicação, transparência e cuidado desde o começo até os dias de hoje. Me sinto abençoado em ter fechado essa parceira de sucesso. E tenho certeza de que cada negócio que eles cuidam prosperam de uma forma sensacional!", //
     avatarUrl: "https://i.pravatar.cc/150?img=10",
+    rating: 5,
   },
   {
-    name: "Emilly Eecilia",
+    name: "Emilly Ecilia",
     title: "Cliente LemonAD",
-    quote: "Quero parabenizar e agradecer pelo excelente trabalho desenvolvido. A equipe demonstra profissionalismo, criatividade e dedicação em cada projeto. É nítido o cuidado em entender as necessidades do cliente e entregar soluções personalizadas que realmente geram resultado. Não troco por nada 🥰",
-    avatarUrl: "https://i.pravatar.cc/150?img=10",
+    quote: "Quero parabenizar e agradecer pelo excelente trabalho desenvolvido. A equipe demonstra profissionalismo, criatividade e dedicação em cada projeto. É nítido o cuidado em entender as necessidades do cliente e entregar soluções personalizadas que realmente geram resultado. Além disso, são super atenciosos e ágil, sempre me orientando e ajudando, transmitindo confiança e comprometimento. A qualidade dos serviços prestados e a clareza na comunicação tornam a experiência ainda mais positiva. Recomendo fortemente para quem busca uma empresa de marketing séria, inovadora e focada em trazer crescimento para os negócios. Não troco por nada 🥰",
+    avatarUrl: "https://i.pravatar.cc/150?img=11",
+    rating: 5,
   },
 ];
 
@@ -30,22 +32,22 @@ const TestimonialCard = ({ testimonial, isMobile }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = isMobile ? 180 : 200;
   const needsTruncation = testimonial.quote.length > maxLength;
-  const displayQuote = !isExpanded && needsTruncation 
+  const displayQuote = !isExpanded && needsTruncation
     ? testimonial.quote.slice(0, maxLength) + "..."
     : testimonial.quote;
 
   return (
-    <Card className="group relative overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 h-full">
+    <Card className="group relative overflow-hidden bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 h-full"> {/* */}
       <CardContent className="p-6 h-full flex flex-col">
         <div className="absolute -top-2 -right-2 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
           <Quote className="h-24 w-24 text-primary" />
         </div>
 
         <div className="flex gap-1 mb-4 flex-shrink-0 relative z-10">
-          {[...Array(testimonial.rating)].map((_, i) => (
-            <Star 
-              key={i} 
-              className="h-4 w-4 fill-primary text-primary transition-transform duration-300 group-hover:scale-110" 
+          {testimonial.rating && typeof testimonial.rating === 'number' && [...Array(testimonial.rating)].map((_, i) => (
+            <Star
+              key={i}
+              className="h-4 w-4 fill-primary text-primary transition-transform duration-300 group-hover:scale-110"
               style={{ transitionDelay: `${i * 50}ms` }}
             />
           ))}
@@ -94,11 +96,13 @@ const TestimonialCard = ({ testimonial, isMobile }) => {
   );
 };
 
+
 const TestimonialsSection = () => {
   const isMobile = useIsMobile();
   const variants = useResponsiveVariants();
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  // Mobile
   if (isMobile) {
     return (
       <section id="testimonials" className="py-16 md:py-20 bg-gradient-to-b from-background via-foreground/5 to-background">
@@ -110,7 +114,7 @@ const TestimonialsSection = () => {
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-lemonad mb-3 leading-tight">
-              O que Nossos{" "}
+              O que Nossos
               <span className="text-primary">Clientes</span>{" "}
               Dizem
             </h2>
@@ -121,10 +125,7 @@ const TestimonialsSection = () => {
 
           <div className="relative">
             <Carousel
-              opts={{
-                align: "center",
-                loop: true,
-              }}
+              opts={{ align: "center", loop: true, }}
               className="w-full"
               setApi={(api) => {
                 if (!api) return;
@@ -144,13 +145,14 @@ const TestimonialsSection = () => {
               </CarouselContent>
             </Carousel>
 
+            {/* Indicadores de Ponto */}
             <div className="flex justify-center gap-2 mt-6">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    index === currentSlide 
-                      ? "w-8 bg-primary" 
+                    index === currentSlide
+                      ? "w-8 bg-primary"
                       : "w-2 bg-primary/20 hover:bg-primary/40"
                   }`}
                   aria-label={`Ir para depoimento ${index + 1}`}
@@ -158,7 +160,7 @@ const TestimonialsSection = () => {
               ))}
             </div>
 
-            <p className="text-center text-xs text-muted-foreground/60 mt-4 flex items-center justify-center gap-2">
+            <p className="text-center text-xs text-muted-foreground/60 mt-4 flex items-center justify-center gap-2"> {/* */}
               <span>←</span>
               Deslize para ver mais
               <span>→</span>
@@ -169,6 +171,7 @@ const TestimonialsSection = () => {
     );
   }
 
+  // Desktop
   return (
     <section id="testimonials" className="py-24 bg-gradient-to-b from-background via-foreground/5 to-background overflow-hidden">
       <div className="container mx-auto">
@@ -185,13 +188,13 @@ const TestimonialsSection = () => {
             </span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-lemonad mb-6 leading-tight">
-            O que Nossos{" "}
+            O que Nossos
             <span className="text-primary relative inline-block">
               Clientes
               <svg className="absolute -bottom-3 left-0 w-full" height="12" viewBox="0 0 200 12" fill="none">
                 <path d="M0 6C50 6 50 6 100 6C150 6 150 6 200 6" stroke="currentColor" strokeWidth="3" className="text-primary/30"/>
               </svg>
-            </span>{" "}
+            </span>
             Dizem
           </h2>
           <p className="text-lg text-muted-foreground mx-auto max-w-2xl">
@@ -206,10 +209,7 @@ const TestimonialsSection = () => {
           viewport={{ once: true, amount: 0.2 }}
         >
           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
+            opts={{ align: "start", loop: true, }}
             className="w-full max-w-7xl mx-auto"
           >
             <CarouselContent className="-ml-4">
@@ -222,7 +222,7 @@ const TestimonialsSection = () => {
                     viewport={{ once: true }}
                     className="h-[380px]"
                   >
-                    <TestimonialCard testimonial={testimonial} isMobile={false} />
+                    <TestimonialCard testimonial={testimonial} isMobile={false} /> {/* */}
                   </motion.div>
                 </CarouselItem>
               ))}

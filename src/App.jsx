@@ -3,35 +3,30 @@ import { useScrollPosition } from './lib/useScrollPosition';
 import { Dock, DockIcon } from "@/components/ui/dock";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { buttonVariants } from "@/components/ui/button";
-// ▼▼▼ ADICIONE os novos ícones UsersRound e PlayCircle ▼▼▼
-import { HomeIcon, LayoutGrid, MessageSquare, BarChart2, Users, UsersRound, PlayCircle } from "lucide-react";
+import { HomeIcon, LayoutGrid, MessageSquare, BarChart2, Users, UsersRound, PlayCircle, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import HeroSection from './sections/HeroSection';
-// ▼▼▼ IMPORTE os novos componentes ▼▼▼
 import AboutUsSection from "./sections/AboutUsSection";
 import ServicesSection from "./sections/ServicesSection";
 import MetricsSection from './sections/MetricsSection';
-import MethodSection from "./sections/MethodSection"; // Importa a seção do método
-// PortfolioSection foi removido
+import MethodSection from "./sections/MethodSection";
 import TestimonialsSection from './sections/TestimonialsSection';
 import ContactSection from './sections/ContactSection';
 import { ParticlesBackground } from './components/ui/ParticlesBackground.jsx';
 
-// ▼▼▼ ATUALIZE A ORDEM E ADICIONE OS NOVOS ITENS ▼▼▼
 const DOCK_DATA = [
   { label: "Início", href: "#home", icon: HomeIcon },
-  { label: "Quem Somos", href: "#about-us", icon: UsersRound }, // Nova seção
-  { label: "Resultados", href: "#metrics", icon: BarChart2 }, // Renomeado de Métricas
-  { label: "Serviços", href: "#services", icon: LayoutGrid }, // Renomeado
-  { label: "Nosso Método", href: "#method", icon: PlayCircle }, // Nova seção
-  { label: "Feedbacks", href: "#testimonials", icon: Users }, // Renomeado de Depoimentos
-  { label: "Contato", href: "#contact", icon: MessageSquare }, // Renomeado
+  { label: "Quem Somos", href: "#about-us", icon: UsersRound },
+  { label: "Resultados", href: "#metrics", icon: BarChart2 },
+  { label: "Serviços", href: "#services", icon: LayoutGrid },
+  { label: "Nosso Método", href: "#method", icon: PlayCircle },
+  { label: "Feedbacks", href: "#testimonials", icon: Star },
+  { label: "Contato", href: "#contact", icon: MessageSquare },
 ];
-// ▲▲▲ FIM DA ATUALIZAÇÃO ▲▲▲
 
 function App() {
   const isScrolled = useScrollPosition(80);
@@ -45,7 +40,6 @@ function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Detecta qual seção está visível na tela (mantém lógica anterior)
   useEffect(() => {
     const handleScroll = () => {
       const sections = DOCK_DATA.map(item => item.href);
@@ -79,7 +73,7 @@ function App() {
     const targetElement = document.querySelector(targetId);
 
     if (targetElement) {
-      const headerOffset = 80; // Ajuste conforme a altura do seu header fixo
+      const headerOffset = 80;
       const elementPosition = targetElement.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -87,7 +81,6 @@ function App() {
         top: offsetPosition,
         behavior: "smooth"
       });
-      // Atualiza a seção ativa imediatamente após o clique para feedback visual
       setActiveSection(targetId);
     }
   };
@@ -97,17 +90,15 @@ function App() {
     <div className="min-h-screen text-foreground relative flex flex-col">
       <ParticlesBackground />
       <Header />
-      {/* ▼▼▼ REORDENE OS COMPONENTES AQUI ▼▼▼ */}
       <main className="flex-grow bg-background">
-        <HeroSection />          {/* 1 - Bem vindo */}
-        <AboutUsSection />       {/* 2 - Quem somos nós */}
-        <MetricsSection />       {/* 3 - Nossos Resultados */}
-        <ServicesSection />      {/* 4 - Nossos serviços */}
-        <MethodSection />        {/* 5 - Nosso método */}
-        <TestimonialsSection />  {/* 6 - Feedbacks */}
-        <ContactSection />       {/* Formulário por último */}
+        <HeroSection />
+        <AboutUsSection />
+        <MetricsSection />
+        <ServicesSection />
+        <MethodSection />
+        <TestimonialsSection />
+        <ContactSection />
       </main>
-      {/* ▲▲▲ FIM DA REORDENAÇÃO ▲▲▲ */}
       <Footer />
 
       <motion.div
