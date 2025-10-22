@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
-import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile"; 
+import { useTheme } from "next-themes";
+import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile";
+import { useEffect, useState } from "react";
+
+// Importa as duas logos
+import LogoVerde from "@/assets/images/logo-lemonad.png";
+import LogoPB from "@/assets/images/logo-lemonad-pb.png";
 
 const services = [
   "Gestão de Tráfego Pago (Google, Meta & TikTok Ads)",
@@ -15,6 +21,39 @@ const services = [
 const ServicesSection = () => {
   const isMobile = useIsMobile();
   const variants = useResponsiveVariants();
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState('light');
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const updateTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setCurrentTheme(isDark ? 'dark' : 'light');
+    };
+
+    updateTheme();
+
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, [mounted]);
+
+  if (!mounted) {
+    return null;
+  }
+
+  const isDark = currentTheme === 'dark';
+  const currentLogo = isDark ? LogoVerde : LogoPB;
 
   // ----- VERSÃO MOBILE -----
   if (isMobile) {
@@ -40,8 +79,13 @@ const ServicesSection = () => {
             </div>
 
             <div className="flex items-center justify-center">
-              <div className="w-full h-96 bg-foreground/5 rounded-lg flex items-center justify-center">
-                <p className="text-muted-foreground">Ilustração em breve...</p>
+              <div className="w-full h-96 rounded-lg flex items-center justify-center p-4">
+                <img
+                  key={currentTheme}
+                  src={currentLogo}
+                  alt="Logo LemonAD"
+                  className="max-h-full max-w-full object-contain"
+                />
               </div>
             </div>
           </div>
@@ -50,7 +94,7 @@ const ServicesSection = () => {
     );
   }
 
-  // ----- VERSÃO DESKTOP (com animações) -----
+  // ----- VERSÃO DESKTOP -----
   return (
     <section id="services" className="py-24">
       <div className="container mx-auto px-6">
@@ -78,9 +122,20 @@ const ServicesSection = () => {
             </ul>
           </div>
 
-          <motion.div variants={variants.itemWithMotion} className="flex items-center justify-center">
-            <div className="w-full h-96 bg-foreground/5 rounded-lg flex items-center justify-center">
-              <p className="text-muted-foreground">Ilustração em breve...</p>
+          <motion.div 
+            variants={variants.itemWithMotion} 
+            className="flex items-center justify-center"
+          >
+            <div className="w-full h-96 rounded-lg flex items-center justify-center p-4">
+              <motion.img
+                key={currentTheme}
+                src={currentLogo}
+                alt="Logo LemonAD"
+                className="max-h-full max-w-full object-contain"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
             </div>
           </motion.div>
         </motion.div>
