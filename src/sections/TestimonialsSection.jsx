@@ -22,7 +22,7 @@ const testimonials = [
   {
     name: "Emilly Ecilia",
     title: "Cliente LemonAD",
-    quote: "Quero parabenizar e agradecer pelo excelente trabalho desenvolvido. A equipe demonstra profissionalismo, criatividade e dedicação em cada projeto. É nítido o cuidado em entender as necessidades do cliente e entregar soluções personalizadas que realmente geram resultado. Além disso, são super atenciosos e ágil, sempre me orientando e ajudando, transmitindo confiança e comprometimento. A qualidade dos serviços prestados e a clareza na comunicação tornam a experiência ainda mais positiva. Recomendo fortemente para quem busca uma empresa de marketing séria, inovadora e focada em trazer crescimento para os negócios. Não troco por nada 🥰",
+    quote: "Quero parabenizar e agradecer pelo excelente trabalho desenvolvido. A equipe demonstra profissionalismo, criatividade e dedicação em cada projeto. É nítido o cuidado em entender as necessidades do cliente e entregar soluções personalizadas que realmente geram resultado. Além disso, são super atenciosos e ágil, sempre me orientando e ajudando, transmitindo confiança e comprometimento. Não troco por nada 🥰",
     avatarUrl: "https://i.pravatar.cc/150?img=11",
     rating: 5,
   },
