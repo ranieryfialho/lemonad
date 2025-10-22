@@ -15,7 +15,7 @@ const testimonials = [
   {
     name: "Hayaly Soares",
     title: "Cliente LemonAD",
-    quote: "Não conhecia sobre tráfego e estratégia digital. Ruan e Talyta conseguiram entregar mais do que conhecimento técnico na minha empresa, houve empatia, comunicação, transparência e cuidado desde o começo até os dias de hoje. Me sinto abençoado em ter fechado essa parceira de sucesso. E tenho certeza de que cada negócio que eles cuidam prosperam de uma forma sensacional!", //
+    quote: "Não conhecia sobre tráfego e estratégia digital. Ruan e Talyta conseguiram entregar mais do que conhecimento técnico na minha empresa, houve empatia, comunicação, transparência e cuidado desde o começo até os dias de hoje. Me sinto abençoado em ter fechado essa parceira de sucesso. E tenho certeza de que cada negócio que eles cuidam prosperam de uma forma sensacional!",
     avatarUrl: "https://i.pravatar.cc/150?img=10",
     rating: 5,
   },
