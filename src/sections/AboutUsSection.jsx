@@ -25,7 +25,7 @@ const FounderCard = ({ founder, initial, whileInView, viewport, variants }) => (
     className="flex flex-col items-center text-center p-4 bg-foreground/5 rounded-lg border border-border/50" //
   >
     {/* ▼▼▼ MODIFICAÇÃO AQUI ▼▼▼ */}
-    <div className="w-64git h-64 rounded-lg bg-muted flex items-center justify-center mb-4 overflow-hidden border-2 border-primary"> 
+    <div className="w-64 h-64 rounded-lg bg-muted flex items-center justify-center mb-4 overflow-hidden border-2 border-primary"> 
     {/* ▲▲▲ ALTERADO de 'rounded-full' para 'rounded-lg' ▲▲▲ */}
 
       {founder.imageUrl === "URL_FOTO_RUAN_AQUI" || founder.imageUrl === "URL_FOTO_TALYTA_AQUI" ? (
