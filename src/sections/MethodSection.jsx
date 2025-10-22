@@ -1,4 +1,3 @@
-// src/sections/MethodSection.jsx
 import { motion } from "framer-motion";
 import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile";
 
@@ -22,11 +21,9 @@ const MethodSection = () => {
           <p className="text-base md:text-lg text-muted-foreground mb-8">
             {description}
           </p>
-          {/* ▼▼▼ SUBSTITUIÇÃO DO IFRAME POR DIV PLACEHOLDER ▼▼▼ */}
           <div className="aspect-video bg-foreground/10 rounded-lg flex items-center justify-center border border-border/50">
             <p className="text-muted-foreground text-sm">Vídeo será adicionado em breve</p>
           </div>
-          {/* ▲▲▲ FIM DA SUBSTITUIÇÃO ▲▲▲ */}
         </div>
       </section>
     );
@@ -54,13 +51,11 @@ const MethodSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true, amount: 0.3 }}
-          className="aspect-video max-w-4xl mx-auto" // Controla tamanho/proporção
+          className="aspect-video max-w-4xl mx-auto"
         >
-          {/* ▼▼▼ SUBSTITUIÇÃO DO IFRAME POR DIV PLACEHOLDER ▼▼▼ */}
           <div className="w-full h-full bg-foreground/10 rounded-lg flex items-center justify-center border border-border/50 shadow-xl">
              <p className="text-muted-foreground">Vídeo será adicionado em breve</p>
           </div>
-          {/* ▲▲▲ FIM DA SUBSTITUIÇÃO ▲▲▲ */}
         </motion.div>
       </div>
     </section>
