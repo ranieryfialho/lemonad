@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import { motion } from "framer-motion";
 import { useResponsiveVariants, useIsMobile } from "@/lib/useIsMobile";
 
-import ImgRuan from '@/assets/images/img_ruan.png';
-import ImgTalyta from '@/assets/images/img_talyta.png';
+import ImgRuan from '@/assets/images/img_ruan.PNG';
+import ImgTalyta from '@/assets/images/img_talyta.PNG';
 
 const founders = [
   {
