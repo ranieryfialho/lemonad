@@ -114,9 +114,9 @@ const TestimonialsSection = () => {
               </span>
             </div>
             <h2 className="text-3xl md:text-4xl font-lemonad mb-3 leading-tight">
-              O que Nossos
+              O que Nossos{' '}
               <span className="text-primary">Clientes</span>{" "}
-              Dizem
+              {' '}Dizem
             </h2>
             <p className="text-sm text-muted-foreground mx-auto max-w-md">
               Resultados reais de parceiros que cresceram com a gente
@@ -188,14 +188,14 @@ const TestimonialsSection = () => {
             </span>
           </div>
           <h2 className="text-4xl lg:text-6xl font-lemonad mb-6 leading-tight">
-            O que Nossos
+            O que Nossos{' '}
             <span className="text-primary relative inline-block">
               Clientes
               <svg className="absolute -bottom-3 left-0 w-full" height="12" viewBox="0 0 200 12" fill="none">
-                <path d="M0 6C50 6 50 6 100 6C150 6 150 6 200 6" stroke="currentColor" strokeWidth="3" className="text-primary/30"/>
+              f  <path d="M0 6C50 6 50 6 100 6C150 6 150 6 200 6" stroke="currentColor" strokeWidth="3" className="text-primary/30"/>
               </svg>
             </span>
-            Dizem
+           {' '}Dizem
           </h2>
           <p className="text-lg text-muted-foreground mx-auto max-w-2xl">
             Resultados reais de parceiros que cresceram com a gente
