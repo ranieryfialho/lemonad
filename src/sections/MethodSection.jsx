@@ -7,8 +7,6 @@ const MethodSection = () => {
 
   const title = "Nosso Método";
   const description = "Descubra como nossa abordagem única combina análise de dados, criatividade e execução estratégica para entregar resultados excepcionais. Assista ao vídeo e veja nosso método em ação.";
-  // REMOVE a variável videoUrl, não é mais necessária por enquanto
-  // const videoUrl = "URL_DO_SEU_VIDEO_AQUI"; 
 
   // Mobile
   if (isMobile) {

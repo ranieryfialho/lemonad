@@ -18,11 +18,11 @@ export const ScrollIndicator = () => {
           ease: "easeInOut",
         }}
         onClick={() => {
-          document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('about-us')?.scrollIntoView({ behavior: 'smooth' });
         }}
       >
-        <p className="font-engravers text-sm tracking-wider mb-1">PROVE O RESULTADO</p>
-        <ChevronDown className="h-6 w-6" />
+        <p className="font-engravers text-sm tracking-wider mb-1">PROVE O RESULTADO</p> {/* */}
+        <ChevronDown className="h-6 w-6" /> {/* */}
       </motion.div>
     </motion.div>
   );
