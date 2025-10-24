@@ -110,7 +110,7 @@ const ContactSection = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Seu E-mail</Label>
-                <Input id="email" type="email" placeholder="email@exemplo.com" />
+                <Input id="email" type="email" placeholder="seu@email.com" />
               </div>
             </div>
             <div className="space-y-2">

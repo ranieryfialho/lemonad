@@ -9,8 +9,8 @@ const MethodSection = () => {
   const title = "Nosso Método";
   const description = "Descubra como nossa abordagem única combina análise de dados, criatividade e execução estratégica para entregar resultados excepcionais.";
   
-  // URL do YouTube com parâmetros para autoplay mudo e controles mínimos
-  const youtubeEmbedUrl = "https://www.youtube.com/embed/y0kBX3K2eJ0?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&showinfo=0&fs=1&playsinline=1";
+  // URL do YouTube SEM autoplay - apenas controles limpos
+  const youtubeEmbedUrl = "https://www.youtube.com/embed/y0kBX3K2eJ0?controls=1&modestbranding=1&rel=0&showinfo=0&fs=1&playsinline=1";
 
   // Mobile
   if (isMobile) {
@@ -35,7 +35,7 @@ const MethodSection = () => {
           <iframe
             src={youtubeEmbedUrl}
             title="Vídeo - Nosso Método LemonAD"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             className="absolute inset-0 w-full h-full bg-black"
             loading="lazy"
@@ -99,7 +99,7 @@ const MethodSection = () => {
             <iframe
               src={youtubeEmbedUrl}
               title="Vídeo - Nosso Método LemonAD"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
               className="absolute top-0 left-0 w-full h-full"
               loading="lazy"
